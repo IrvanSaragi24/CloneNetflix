@@ -37,6 +37,8 @@ class HomeViewController: UIViewController {
         
         let headerView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
         homeFeedTable.tableHeaderView = headerView
+        
+
  
     }
     
@@ -75,6 +77,8 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else {
             return UITableViewCell()
         }
+        
+        cell.delegete = self
         
         switch indexPath.section{
         case sections.TrendingMovies.rawValue:
@@ -159,4 +163,16 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource{
         
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0,-offset))
     }
+}
+
+extension HomeViewController : CollectionViewTableViewCellDelegete {
+    func CollectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            let vc = TitlePreViewController()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
 }
