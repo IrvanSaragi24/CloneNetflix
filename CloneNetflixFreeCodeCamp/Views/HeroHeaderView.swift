@@ -8,8 +8,6 @@
 import UIKit
 
 class HeroHeaderView: UIView {
-    
-    
     private let dowmloadButton : UIButton = {
        let button = UIButton()
         button.setTitle("Download", for: .normal)
